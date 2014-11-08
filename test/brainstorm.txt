@@ -1,0 +1,11 @@
+Pin class
+  a pin needs to have a color and a location
+  a pin needs to be
+  code pegs
+
+
+
+Board class ????
+
+
+Game class
