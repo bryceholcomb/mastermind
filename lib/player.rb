@@ -1,32 +1,24 @@
-require_relative './game'
-require_relative './communication'
+require_relative './printer'
 
 class Player
-  attr_reader :guesses, :sequence, :sequences
+  attr_reader :guesses, :guess, :formatted_guess
 
   def initialize
-    @guesses = 0
-    @sequences = []
+    @guesses = []
   end
 
-  def valid_guess?
-    #need to validate guess based on length and return message if it is too short or too long
-  end
-
-  def guess
-    puts Communication.guess_instructions
-    @sequence = gets
-    @guesses += 1
-    @sequences << @sequence.upcase
-    @sequence
+  def take_turn(guess)
+    @guess = guess
+    @formatted_guess = @guess.strip.upcase.chars
+    @guesses << @guess
   end
 end
 
 if __FILE__ == $0
   player = Player.new
-  player.guess
-  puts player.sequence.upcase
-  player.guess
-  puts player.sequence.upcase
-  puts player.sequences
+  player.take_turn('rGRb')
+  puts player.guess
+  player.take_turn('bbbb')
+  puts "You guessed '#{player.guess}'."
+  puts player.guesses
 end

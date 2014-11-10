@@ -1,34 +1,38 @@
 require_relative './player'
+require_relative './printer'
+require_relative './code_comparer'
+require_relative './hidden_code_generator'
 
 class Game
-  attr_reader :hidden_code
-
-  def create_hidden_code
-    @hidden_code = 'rrgg'
-    puts guess_instructions
-    @hidden_code
-  end
-
-  def compare
-    #compare player's sequence with code
+  #use stream from earlier lesson to change where the input is coming from
+  def initialize(instream, outstream)
+    @instream = instream
+    @outstream = outstream
   end
 
   def play
-    #loop through
+    hidden_code = HiddenCode.new
+    puts Printer.guess_instructions
+    guess = instream.gets.chomp
+    player.take_turn(guess)
+    loop do
+      if player.guess != @hidden_code
+        guess = instream.gets.chomp
+        player.take_turn(guess)
+        compare_codes(player)
+        outstream.puts feedback(player)
+      else
+        outstream.puts print_stats
+        break
+      end
+    end
   end
 
-  def feedback
-    "'RRGG' has 3 of the correct elements with 2 in the correct positions\nYou've taken 1 guess"
-  end
 
-  def print_stats
-    "Congratulations! You guessed the sequence #{@hidden_code.upcase} in #{player.guesses} guess(es)\nDo you want to (p)lay again or (q)uit?"
-  end
 
 
 end
 
 if __FILE__ == $0
   mastermind = Game.new
-  puts Game.guess_instructions
 end

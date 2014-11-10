@@ -1,6 +1,14 @@
-module Communication
+module Printer
   def self.welcome_message
-    "\nWelcome to MASTERMIND\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    "\nWelcome to MASTERMIND\n" + Printer.command_options
+  end
+
+  def self.command_options
+    "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+  end
+
+  def self.command_prompt
+    "Enter your command: "
   end
 
   def self.instructions
@@ -13,5 +21,29 @@ module Communication
 
   def self.exit_message
     "Thanks for playing! Come back again."
+  end
+
+  def self.feedback(guess)
+    #"#{guess} has #{@correct_elements} of the correct elements with #{@correct_positions} in the correct position\nYou've taken #{player.guesses.count} guess(es). Guess again!"
+  end
+
+  def self.print_stats
+    #"Congratulations! You guessed the sequence #{@hidden_code.upcase} in #{player.guesses.count} guess(es)\nDo you want to (p)lay again or (q)uit?"
+  end
+
+  def self.not_a_valid_guess
+
+  end
+
+  def self.too_short_message
+
+  end
+
+  def self.too_long_message
+
+  end
+
+  def self.not_a_valid_command
+    "This is not a valid command" + Printer.command_options
   end
 end
