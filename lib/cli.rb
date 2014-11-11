@@ -7,13 +7,14 @@ class CLI
   def initialize(instream, outstream)
     @instream   = instream
     @outstream  = outstream
+    @printer    = Printer.new($stdout)
     @command    = ""
   end
 
   def start_game
-    outstream.puts Printer.welcome_message
+    puts @printer.welcome_message
     until finished?
-      outstream.puts Printer.command_options
+      puts @printer.command_options
       @command = instream.gets.strip.downcase
       process_command
     end
@@ -24,12 +25,9 @@ class CLI
     when play?
       game = Game.new($stdin, $stdout)
       game.play
-    when instructions?
-      outstream.puts Printer.instructions
-    when finished?
-      outstream.puts Printer.exit_cli_message
-    else
-      puts Printer.not_a_valid_command
+    when instructions? then puts @printer.instructions
+    when finished? then puts @printer.exit_cli_message
+    else puts @printer.not_a_valid_command
     end
   end
 
