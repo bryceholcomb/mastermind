@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/timer'
 
-class IntegrationTest < Minitest::Test
+class TimerTest < Minitest::Test
   def setup
     @timer = Timer.new
   end
