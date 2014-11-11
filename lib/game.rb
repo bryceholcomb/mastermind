@@ -9,6 +9,7 @@ class Game
 
   def initialize(instream, outstream, possible_colors = %w(R G B Y))
     @timer           = Timer.new
+    @printer         = Printer.new($stdout)
     @instream        = instream
     @outstream       = outstream
     @guesses         = []
@@ -18,7 +19,7 @@ class Game
   end
 
   def play
-    outstream.puts Printer.guess_instructions
+    puts @printer.guess_instructions
     until match? || exit?
       take_turn
       process_guess
@@ -27,17 +28,13 @@ class Game
 
   def process_guess
     case
-    when exit?
-      outstream.puts Printer.exit_game_message
+    when exit? then puts @printer.exit_game_message
     when match?
       @timer.calculate_time_elapsed
-      puts "Congratulations! You guessed the sequence '#{@hidden_code.join}' in #{@guesses.count} guess(es) over #{@timer.minutes} minutes, #{@timer.seconds} seconds.\n"
-    when too_short?
-      outstream.puts Printer.too_short_message
-    when too_long?
-      outstream.puts Printer.too_long_message
-    when contains_invalid_colors?
-      outstream.puts Printer.not_a_valid_guess
+      puts "Congratulations! You guessed the sequence '#{@hidden_code.join}' in #{@guesses.count} guess(es) over #{@timer.minutes} minute(s), #{@timer.seconds} second(s).\n"
+    when too_short? then puts @printer.too_short_message
+    when too_long? then puts @printer.too_long_message
+    when contains_invalid_colors? then puts @printer.not_a_valid_guess
     else
       @guesses << @guess
       puts "'#{@guess.upcase}' has #{CodeComparer.correct_colors(@hidden_code, @formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(@hidden_code, @formatted_guess)} in the correct position\nYou've taken #{@guesses.count} guess(es). Guess again!"
