@@ -5,12 +5,14 @@ require 'minitest/mock'
 require_relative '../lib/game'
 
 class GameTest < Minitest::Test
+  #use StringIO.new('rrrg') to stub out the input when testing the REPL
 
-  def test_when_player_chooses_i_the_instructions_are_printed
+
+  def test_compare_method_is_called
 
   end
 
-  def test_when_player_chooses_q_the_game_ends
+  def test_play_method_is_called
 
   end
 

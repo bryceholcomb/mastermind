@@ -1,34 +1,75 @@
-require_relative './player'
+require_relative './printer'
+require_relative './code_comparer'
+require_relative './hidden_code'
 
 class Game
-  attr_reader :hidden_code
+  #use stream from earlier lesson to change where the input is coming from
+  attr_reader :instream, :outstream, :guesses, :guess, :formatted_guess
 
-  def create_hidden_code
-    @hidden_code = 'rrgg'
-    puts guess_instructions
-    @hidden_code
-  end
-
-  def compare
-    #compare player's sequence with code
+  def initialize(instream, outstream, possible_colors = %w(R G B Y))
+    @instream        = instream
+    @outstream       = outstream
+    @guesses         = []
+    @hidden_code     = HiddenCode.new.reveal
+    @possible_colors = possible_colors
+    @guess           = ""
   end
 
   def play
-    #loop through
+    outstream.puts Printer.guess_instructions
+    until match? || exit?
+      take_turn
+      process_guess
+    end
   end
 
-  def feedback
-    "'RRGG' has 3 of the correct elements with 2 in the correct positions\nYou've taken 1 guess"
+  def process_guess
+    case
+    when exit?
+      outstream.puts Printer.exit_game_message
+    when match?
+      puts "Congratulations! You guessed the sequence '#{@hidden_code.join}' in #{@guesses.count} guess(es)\n"
+    when too_short?
+      outstream.puts Printer.too_short_message
+    when too_long?
+      outstream.puts Printer.too_long_message
+    when contains_invalid_colors?
+      outstream.puts Printer.not_a_valid_guess
+    else
+      puts "'#{@guess.upcase}' has #{CodeComparer.correct_colors(@hidden_code, @formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(@hidden_code, @formatted_guess)} in the correct position\nYou've taken #{@guesses.count} guess(es). Guess again!"
+    end
   end
 
-  def print_stats
-    "Congratulations! You guessed the sequence #{@hidden_code.upcase} in #{player.guesses} guess(es)\nDo you want to (p)lay again or (q)uit?"
+  def take_turn
+    @guess = instream.gets.strip
+    @formatted_guess = @guess.upcase.chars
+    @guesses << @guess
   end
 
+  def match?
+    CodeComparer.match?(@hidden_code, @formatted_guess)
+  end
+
+  def exit?
+    guess == "quit" || guess == "q"
+  end
+
+  def too_short?
+    @guess.length < 4
+  end
+
+  def too_long?
+    @guess.length > 4
+  end
+
+  def contains_invalid_colors?
+    invalid = @formatted_guess - @possible_colors
+    invalid.count != 0
+  end
 
 end
 
 if __FILE__ == $0
-  mastermind = Game.new
-  puts Game.guess_instructions
+  game = Game.new($stdin, $stdout)
+  game.play
 end
