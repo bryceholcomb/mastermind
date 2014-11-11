@@ -1,16 +1,16 @@
 class HiddenCode
 
-  def initialize(size = 4)
-    possible_colors = %w( R G B Y )                                               # => ["R", "G", "B", "Y"]
-    @hidden_code = (0...size).map{ possible_colors[rand(possible_colors.size)] }  # => ["R", "R", "R", "Y"]
+  def initialize(size = 4, possible_colors = "rgby")
+    @possible_colors = possible_colors.upcase.chars                                 # => ["R", "G", "B", "Y"]
+    @hidden_code = (0...size).map{ @possible_colors[rand(@possible_colors.size)] }  # => ["Y", "G", "B", "B"]
   end
 
   def reveal
-    @hidden_code  # => ["R", "R", "R", "Y"]
+    @hidden_code  # => ["Y", "G", "B", "B"]
   end
 end
 
 if __FILE__ == $0               # => true
-  hidden_code = HiddenCode.new  # => #<HiddenCode:0x007fd2fa834ff8 @hidden_code=["R", "R", "R", "Y"]>
-  hidden_code.reveal            # => ["R", "R", "R", "Y"]
-end                             # => ["R", "R", "R", "Y"]
+  hidden_code = HiddenCode.new  # => #<HiddenCode:0x007fbab39891b0 @possible_colors=["R", "G", "B", "Y"], @hidden_code=["Y", "G", "B", "B"]>
+  hidden_code.reveal            # => ["Y", "G", "B", "B"]
+end                             # => ["Y", "G", "B", "B"]

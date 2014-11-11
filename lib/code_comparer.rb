@@ -1,5 +1,3 @@
-#the slice method is messing up my hidden_code array and slicing everything out
-
 class CodeComparer
 
   def initialize(hidden_code, guess)
@@ -10,12 +8,6 @@ class CodeComparer
   def match?
     @hidden_code == @guess
   end
-
-  # def correct_colors
-  #   @hidden_code.uniq.count do |char|  # => ["Y", "R", "G", "B"]
-  #     @guess.include?(char)      # => true, false, true, false
-  #   end                          # => ["Y", "R"]
-  # end
 
   def correct_colors
    hidden_code = @hidden_code.dup
@@ -32,10 +24,6 @@ class CodeComparer
   def correct_positions
     @correct_positions = (0..(@hidden_code.size - 1)).count { |i| @guess[i] == @hidden_code[i] }
   end
-
-  #def reset
-  #  @hidden_code =
-  #end
 
 end
 
