@@ -1,4 +1,5 @@
 require_relative './printer'
+require_relative './timer'
 require_relative './code_comparer'
 require_relative './hidden_code'
 
@@ -7,13 +8,13 @@ class Game
   attr_reader :instream, :outstream, :guesses, :guess, :formatted_guess
 
   def initialize(instream, outstream, possible_colors = %w(R G B Y))
+    @timer           = Timer.new
     @instream        = instream
     @outstream       = outstream
     @guesses         = []
     @hidden_code     = HiddenCode.new.reveal
     @possible_colors = possible_colors
     @guess           = ""
-    #@printer         = Printer.new(outstream)
   end
 
   def play
@@ -29,7 +30,8 @@ class Game
     when exit?
       outstream.puts Printer.exit_game_message
     when match?
-      puts "Congratulations! You guessed the sequence '#{@hidden_code.join}' in #{@guesses.count} guess(es)\n"
+      @timer.calculate_time_elapsed
+      puts "Congratulations! You guessed the sequence '#{@hidden_code.join}' in #{@guesses.count} guess(es) over #{@timer.minutes} minutes, #{@timer.seconds} seconds.\n"
     when too_short?
       outstream.puts Printer.too_short_message
     when too_long?
