@@ -1,0 +1,7 @@
+1)  add a Timer for capturing elapsed time
+2)  make Printer module a class and instantiate it with an
+    outstream so you don't have to keep calling "outstream.puts"
+3)  separate out all the functions of the game class
+3)  add difficulty feature
+4)  add record tracking and top 10
+5)  add a Rakefile so I can run all the tests
