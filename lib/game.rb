@@ -13,6 +13,7 @@ class Game
     @hidden_code     = HiddenCode.new.reveal
     @possible_colors = possible_colors
     @guess           = ""
+    #@printer         = Printer.new(outstream)
   end
 
   def play
@@ -36,6 +37,7 @@ class Game
     when contains_invalid_colors?
       outstream.puts Printer.not_a_valid_guess
     else
+      @guesses << @guess
       puts "'#{@guess.upcase}' has #{CodeComparer.correct_colors(@hidden_code, @formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(@hidden_code, @formatted_guess)} in the correct position\nYou've taken #{@guesses.count} guess(es). Guess again!"
     end
   end
@@ -43,7 +45,6 @@ class Game
   def take_turn
     @guess = instream.gets.strip
     @formatted_guess = @guess.upcase.chars
-    @guesses << @guess
   end
 
   def match?

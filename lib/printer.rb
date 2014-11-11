@@ -1,3 +1,5 @@
+#change this to class and instantiate with outstream
+
 module Printer
   def self.welcome_message
     "\nWelcome to MASTERMIND\n"
