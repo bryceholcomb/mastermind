@@ -42,10 +42,4 @@ class CLI
   def finished?
     command == "quit" || command == "q"
   end
-
-end
-
-if __FILE__ == $0
-  cli = CLI.new($stdin, $stdout)
-  cli.start_game
 end
