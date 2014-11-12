@@ -1,4 +1,4 @@
-module Validator
+module ValidateGuess
   def self.too_short?(guess)
     guess.length < 4
   end

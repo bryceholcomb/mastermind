@@ -1,6 +1,6 @@
 require_relative './printer'
 require_relative './timer'
-require_relative './validator'
+require_relative './validate_guess'
 require_relative './compare_codes'
 require_relative './hidden_code'
 
@@ -33,9 +33,9 @@ class Game
     when match?
       @timer.calculate_time_elapsed
       puts @printer.print_stats(hidden_code, guesses, @timer)
-    when Validator.too_short?(guess) then puts @printer.too_short_message
-    when Validator.too_long?(guess) then puts @printer.too_long_message
-    when Validator.contains_invalid_characters?(formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
+    when ValidateGuess.too_short?(guess) then puts @printer.too_short_message
+    when ValidateGuess.too_long?(guess) then puts @printer.too_long_message
+    when ValidateGuess.contains_invalid_characters?(formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
     else
       @guesses << @guess
       puts @printer.feedback(guess, hidden_code, formatted_guess, guesses)
