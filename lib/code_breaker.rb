@@ -7,7 +7,7 @@ class CodeBreaker
   end
 
   def make_guess(instream)
-    @guess = instream.gets.strip
+    @guess = instream.gets.downcase.strip
     @formatted_guess = @guess.upcase.chars
   end
 
