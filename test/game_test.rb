@@ -5,8 +5,6 @@ require 'minitest/mock'
 require_relative '../lib/game'
 
 class GameTest < Minitest::Test
-  #use StringIO.new('rrrg') to stub out the input when testing the REPL
-
 
   def test_compare_method_is_called
 
