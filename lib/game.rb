@@ -33,6 +33,7 @@ class Game
     when match?
       @timer.calculate_time_elapsed
       puts @printer.print_stats(hidden_code, player.guesses, @timer)
+    when history? then puts player.guesses
     when ValidateGuess.too_short?(player.guess) then puts @printer.too_short_message
     when ValidateGuess.too_long?(player.guess) then puts @printer.too_long_message
     when ValidateGuess.contains_invalid_characters?(player.formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
@@ -48,5 +49,9 @@ class Game
 
   def exit?
     player.guess == "quit" || player.guess == "q"
+  end
+
+  def history?
+    player.guess == "history" || player.guess == "h"
   end
 end

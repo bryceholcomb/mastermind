@@ -30,7 +30,7 @@ class Printer
 
 #<<<Game messages>>>
   def guess_instructions
-    "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow. Use (q)uit at any time to end the game.\nWhat's your guess?\n"
+    "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow.\nUse (q)uit at any time to end the game. Use (h)istory to view a log of your past guesses.\nWhat's your guess?\n"
   end
 
   def exit_game_message
