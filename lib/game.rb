@@ -1,28 +1,28 @@
+require_relative './code_breaker'
 require_relative './printer'
 require_relative './timer'
-require_relative './validator'
-require_relative './code_comparer'
+require_relative './validate_guess'
+require_relative './compare_codes'
 require_relative './hidden_code'
 
 class Game
-  attr_reader :instream, :outstream, :guesses, :guess, :formatted_guess, :hidden_code
+  attr_reader :instream, :outstream, :player, :hidden_code
 
   def initialize(instream, outstream)
+    @player          = CodeBreaker.new
     @code            = HiddenCode.new
     @hidden_code     = @code.reveal
-    @guess           = ""
     @timer           = Timer.new
     @printer         = Printer.new($stdout)
     @instream        = instream
     @outstream       = outstream
-    @guesses         = []
     @possible_colors = @code.possible_colors
   end
 
   def play
     puts @printer.guess_instructions
     until match? || exit?
-      take_turn
+      player.make_guess(instream)
       process_guess
     end
   end
@@ -32,26 +32,21 @@ class Game
     when exit? then puts @printer.exit_game_message
     when match?
       @timer.calculate_time_elapsed
-      puts @printer.print_stats(hidden_code, guesses, @timer)
-    when Validator.too_short?(guess) then puts @printer.too_short_message
-    when Validator.too_long?(guess) then puts @printer.too_long_message
-    when Validator.contains_invalid_characters?(formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
+      puts @printer.print_stats(hidden_code, player.guesses, @timer)
+    when ValidateGuess.too_short?(player.guess) then puts @printer.too_short_message
+    when ValidateGuess.too_long?(player.guess) then puts @printer.too_long_message
+    when ValidateGuess.contains_invalid_characters?(player.formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
     else
-      @guesses << @guess
-      puts @printer.feedback(guess, hidden_code, formatted_guess, guesses)
+      player.add_guess
+      puts @printer.feedback(player.guess, hidden_code, player.formatted_guess, player.guesses)
     end
   end
 
-  def take_turn
-    @guess = instream.gets.strip
-    @formatted_guess = @guess.upcase.chars
-  end
-
   def match?
-    CodeComparer.match?(hidden_code, formatted_guess)
+    CompareCodes.match?(hidden_code, player.formatted_guess)
   end
 
   def exit?
-    guess == "quit" || guess == "q"
+    player.guess == "quit" || player.guess == "q"
   end
 end

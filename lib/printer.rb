@@ -38,7 +38,7 @@ class Printer
   end
 
   def feedback(guess, hidden_code, formatted_guess, guesses)
-    "\n'#{guess.upcase}' has #{CodeComparer.correct_colors(hidden_code, formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(hidden_code, formatted_guess)} in the correct position\nYou've taken #{guesses.count} guess(es). Guess again!"
+    "\n'#{guess.upcase}' has #{CompareCodes.correct_colors(hidden_code, formatted_guess)} of the correct elements with #{CompareCodes.correct_positions(hidden_code, formatted_guess)} in the correct position\nYou've taken #{guesses.count} guess(es). Guess again!"
   end
 
   def print_stats(hidden_code, guesses, timer)
