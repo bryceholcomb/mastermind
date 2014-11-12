@@ -1,4 +1,4 @@
-class CodeComparer
+module CompareCodes
   def self.match?(hidden_code, guess)
     hidden_code == guess
   end

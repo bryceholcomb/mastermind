@@ -1,7 +1,7 @@
 require_relative './printer'
 require_relative './timer'
 require_relative './validator'
-require_relative './code_comparer'
+require_relative './compare_codes'
 require_relative './hidden_code'
 
 class Game
@@ -48,7 +48,7 @@ class Game
   end
 
   def match?
-    CodeComparer.match?(hidden_code, formatted_guess)
+    CompareCodes.match?(hidden_code, formatted_guess)
   end
 
   def exit?
