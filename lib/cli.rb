@@ -15,7 +15,7 @@ class CLI
     puts @printer.welcome_message
     until finished?
       puts @printer.command_options
-      @command = instream.gets.strip.downcase
+      @command = @instream.gets.strip.downcase
       process_command
     end
   end
