@@ -12,6 +12,6 @@ class CodeBreaker
   end
 
   def add_guess
-    guesses << guess
+    guesses << guess.upcase
   end
 end
