@@ -37,12 +37,12 @@ class Printer
     "Thanks for playing! Come back again."
   end
 
-  def feedback
-    "'#{@guess}' has #{CodeComparer.correct_colors(@hidden_code, @formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(@hidden_code, @formatted_guess)} in the correct position\nYou've taken #{@guesses.count} guess(es).\n Guess again!\n"
+  def feedback(guess, hidden_code, formatted_guess, guesses)
+    "'#{guess.upcase}' has #{CodeComparer.correct_colors(hidden_code, formatted_guess)} of the correct elements with #{CodeComparer.correct_positions(hidden_code, formatted_guess)} in the correct position\nYou've taken #{guesses.count} guess(es). Guess again!"
   end
 
-  def print_stats
-    "Congratulations! You guessed the sequence #{@hidden_code} in #{@guesses.count} guess(es)\n#{command_options}"
+  def print_stats(hidden_code, guesses, timer)
+    "Congratulations! You guessed the sequence '#{hidden_code.join}' in #{guesses.count} guess(es) over #{timer.minutes} minute(s), #{timer.seconds} second(s).\n"
   end
 
   def too_short_message
