@@ -7,15 +7,16 @@ require_relative './hidden_code'
 class Game
   attr_reader :instream, :outstream, :guesses, :guess, :formatted_guess, :hidden_code
 
-  def initialize(instream, outstream, possible_colors = %w(R G B Y))
-    @hidden_code     = HiddenCode.new.reveal
+  def initialize(instream, outstream)
+    @code            = HiddenCode.new
+    @hidden_code     = @code.reveal
     @guess           = ""
     @timer           = Timer.new
     @printer         = Printer.new($stdout)
     @instream        = instream
     @outstream       = outstream
     @guesses         = []
-    @possible_colors = possible_colors
+    @possible_colors = @code.possible_colors
   end
 
   def play
