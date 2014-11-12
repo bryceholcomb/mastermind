@@ -23,12 +23,3 @@ class Timer
     @minutes, @seconds = time_elapsed.divmod(60)
   end
 end
-
-if __FILE__ == $0
-  timer = Timer.new
-  puts timer.start_time
-  timer.calculate_time_elapsed
-  puts timer.end_time
-  puts timer.minutes
-  puts timer.seconds
-end
