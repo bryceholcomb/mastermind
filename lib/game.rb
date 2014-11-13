@@ -16,7 +16,7 @@ class Game
     @outstream       = outstream
   end
 
-  def setup_game
+  def enter_game_flow
     until valid_difficulty? || setup_exit?
       puts @printer.choose_difficulty
       player.choose_difficulty(instream)
@@ -25,7 +25,6 @@ class Game
         play
       end
     end
-
   end
 
   def play
