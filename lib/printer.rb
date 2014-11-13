@@ -64,4 +64,8 @@ class Printer
   def whats_your_guess
     "What's your guess?\n"
   end
+
+  def top_score_congratulations
+    "Congratulations! You've guessed the sequence! What's your name?"
+  end
 end
