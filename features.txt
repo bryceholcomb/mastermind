@@ -1,6 +1,0 @@
-*  make Printer module a class and instantiate it with an
-    outstream so you don't have to keep calling "outstream.puts"
-*  separate out all the functions of the game class
-*  add difficulty feature
-*  add record tracking and top 10
-*  add a Rakefile so I can run all the tests
