@@ -10,17 +10,16 @@ class Game
 
   def initialize(instream, outstream)
     @player          = CodeBreaker.new
-    @code            = HiddenCode.new
-    @hidden_code     = @code.reveal
     @timer           = Timer.new
     @printer         = Printer.new($stdout)
     @instream        = instream
     @outstream       = outstream
-    @possible_colors = @code.possible_colors
   end
 
   def play
-    puts @printer.guess_instructions
+    puts @printer.choose_difficulty
+    player.choose_difficulty(instream)
+    process_difficulty
     until codes_match? || exit?
       player.make_guess(instream)
       process_guess
@@ -43,22 +42,46 @@ class Game
 
   def feedback
     player.add_guess
-    puts @printer.feedback(player.guess, hidden_code, player.formatted_guess, player.guesses)
+    puts @printer.feedback(player.guess, hidden_code.reveal, player.formatted_guess, player.guesses)
   end
 
 
   def validate_guess(player_guess, guess_chars, possible_colors)
     case
-    when ValidateGuess.too_short?(player_guess) then puts @printer.too_short_message
-    when ValidateGuess.too_long?(player_guess) then puts @printer.too_long_message
-    when ValidateGuess.contains_invalid_characters?(guess_chars, possible_colors)
+    when ValidateGuess.too_short?(player_guess, @hidden_code.size) then puts @printer.too_short_message
+    when ValidateGuess.too_long?(player_guess, @hidden_code.size) then puts @printer.too_long_message
+    when ValidateGuess.contains_invalid_characters?(guess_chars, @hidden_code.possible_colors)
       puts @printer.not_a_valid_guess
     else feedback
     end
   end
 
+  def process_difficulty
+    case player.difficulty
+    when "b" then beginner_game
+    when "i" then intermediate_game
+    when "a" then advanced_game
+    else puts @printer.choose_difficulty
+    end
+  end
+
+  def beginner_game
+    @hidden_code = HiddenCode.new(4, "rgby")
+    puts @printer.beginner_sequence
+  end
+
+  def intermediate_game
+    @hidden_code = HiddenCode.new(6, "rgbyp")
+    puts @printer.intermediate_sequence
+  end
+
+  def advanced_game
+    @hidden_code = HiddenCode.new(8, "rgbypo")
+    puts @printer.advanced_sequence
+  end
+
   def codes_match?
-    CompareCodes.match?(hidden_code, player.formatted_guess)
+    CompareCodes.match?(hidden_code.reveal, player.formatted_guess)
   end
 
   def exit?
@@ -68,4 +91,5 @@ class Game
   def check_history?
     player.guess == "history" || player.guess == "h"
   end
+
 end
