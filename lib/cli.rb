@@ -24,7 +24,7 @@ class CLI
     case
     when play?
       game = Game.new($stdin, $stdout)
-      game.play
+      game.setup_game
     when instructions?  then puts @printer.instructions
     when finished?      then puts @printer.exit_cli_message
     else puts @printer.not_a_valid_command

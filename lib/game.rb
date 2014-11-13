@@ -16,19 +16,36 @@ class Game
     @outstream       = outstream
   end
 
+  def setup_game
+    until valid_difficulty? || setup_exit?
+      puts @printer.choose_difficulty
+      player.choose_difficulty(instream)
+      if valid_difficulty?
+        process_difficulty
+        play
+      end
+    end
+
+  end
+
   def play
-    puts @printer.choose_difficulty
-    player.choose_difficulty(instream)
-    process_difficulty
-    until codes_match? || exit?
+    until codes_match? || play_exit?
       player.make_guess(instream)
       process_guess
     end
   end
 
+  def process_difficulty
+    case player.difficulty
+    when "b" then beginner_game
+    when "i" then intermediate_game
+    when "a" then advanced_game
+    end
+  end
+
   def process_guess
     case
-    when exit? then puts @printer.exit_game_message
+    when play_exit? then puts @printer.exit_game_message
     when codes_match? then you_win
     when check_history? then puts player.guesses
     else validate_guess(player.guess, player.formatted_guess, @possible_colors)
@@ -56,13 +73,10 @@ class Game
     end
   end
 
-  def process_difficulty
-    case player.difficulty
-    when "b" then beginner_game
-    when "i" then intermediate_game
-    when "a" then advanced_game
-    else puts @printer.choose_difficulty
-    end
+  def valid_difficulty?
+    player.difficulty == "b" ||
+    player.difficulty == "i" ||
+    player.difficulty == "a"
   end
 
   def beginner_game
@@ -84,7 +98,11 @@ class Game
     CompareCodes.match?(hidden_code.reveal, player.formatted_guess)
   end
 
-  def exit?
+  def setup_exit?
+    player.difficulty == "quit" || player.difficulty == "q"
+  end
+
+  def play_exit?
     player.guess == "quit" || player.guess == "q"
   end
 
