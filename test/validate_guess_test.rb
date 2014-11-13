@@ -10,18 +10,20 @@ class ValidateGuessTest < Minitest::Test
 
   def test_guess_is_too_short
     guess = "R"
-    assert ValidateGuess.too_short?(guess)
+    hidden_code = %w(R R R R)
+    assert ValidateGuess.too_short?(guess, hidden_code.size)
 
     guess = "RRRR"
-    refute ValidateGuess.too_short?(guess)
+    refute ValidateGuess.too_short?(guess, hidden_code.size)
   end
 
   def test_guess_is_too_long
     guess = "RRRRRRR"
-    assert ValidateGuess.too_long?(guess)
+    hidden_code = %w(R R R R)
+    assert ValidateGuess.too_long?(guess, hidden_code.size)
 
     guess = "RRRR"
-    refute ValidateGuess.too_long?(guess)
+    refute ValidateGuess.too_long?(guess, hidden_code.size)
   end
 
   def test_guess_contains_invalid_characters
