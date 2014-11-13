@@ -36,7 +36,8 @@ class Game
     when history? then puts player.guesses
     when ValidateGuess.too_short?(player.guess) then puts @printer.too_short_message
     when ValidateGuess.too_long?(player.guess) then puts @printer.too_long_message
-    when ValidateGuess.contains_invalid_characters?(player.formatted_guess, @possible_colors) then puts @printer.not_a_valid_guess
+    when ValidateGuess.contains_invalid_characters?(player.formatted_guess, @possible_colors) 
+      puts @printer.not_a_valid_guess
     else
       player.add_guess
       puts @printer.feedback(player.guess, hidden_code, player.formatted_guess, player.guesses)

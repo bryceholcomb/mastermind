@@ -13,6 +13,8 @@ module CompareCodes
   end
 
   def self.correct_positions(hidden_code, guess)
-    correct_positions = (0..(hidden_code.size - 1)).count { |i| guess[i] == hidden_code[i] }
+    correct_positions = (0..(hidden_code.size - 1)).count do
+      |i| guess[i] == hidden_code[i]
+    end
   end
 end
