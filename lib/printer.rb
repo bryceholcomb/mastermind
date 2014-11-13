@@ -33,6 +33,18 @@ class Printer
     "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow.\nUse (q)uit at any time to end the game. Use (h)istory to view a log of your past guesses.\nWhat's your guess?\n"
   end
 
+  def beginner_sequence
+    "I have generated a beginner sequence with four elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow.\nUse (q)uit at any time to end the game. Use (h)istory to view a log of your past guesses.\nWhat's your guess?\n"
+  end
+
+  def intermediate_sequence
+    "I have generated an intermediate sequence with six elements made up of: (r)ed, (g)reen, (b)lue, (y)ellow, and (p)urple.\nUse (q)uit at any time to end the game. Use (h)istory to view a log of your past guesses.\nWhat's your guess?\n"
+  end
+
+  def advanced_sequence
+    "I have generated an advanced sequence with eight elements made up of: (r)ed, (g)reen, (b)lue, and (y)ellow, (p)urple, and (o)range.\nUse (q)uit at any time to end the game. Use (h)istory to view a log of your past guesses.\nWhat's your guess?\n"
+  end
+
   def exit_game_message
     "Thanks for playing! Come back again."
   end
@@ -42,7 +54,7 @@ class Printer
   end
 
   def print_stats(hidden_code, guesses, timer)
-    "Congratulations! You guessed the sequence '#{hidden_code.join}' in #{guesses.count} guess(es) over #{timer.minutes} minute(s), #{timer.seconds} second(s).\n"
+    "Congratulations! You guessed the sequence '#{hidden_code.reveal.join}' in #{guesses.count} guess(es) over #{timer.minutes} minute(s), #{timer.seconds} second(s).\n"
   end
 
   def too_short_message
@@ -67,5 +79,9 @@ class Printer
 
   def top_score_congratulations
     "Congratulations! You've guessed the sequence! What's your name?"
+  end
+
+  def choose_difficulty
+    "What difficulty level would you like to play? Please choose between (b)eginner, (i)ntermediate or (a)dvanced"
   end
 end

@@ -11,9 +11,9 @@ class TopScores
     end
   end
 
-  def append_player_score
+  def append_player_score(player_name, correct_sequence, guesses, elapsed_time)
     CSV.open(to_file= 'top_scores.csv', "a") do |csv|
-      csv << [player.name, player.guess, player.guesses.count, timer]
+      csv << [player_name, correct_sequence, guesses, elapsed_time]
     end
   end
 
