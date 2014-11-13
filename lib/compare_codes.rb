@@ -6,9 +6,7 @@ module CompareCodes
   def self.correct_colors(hidden_code, guess)
    code = hidden_code.dup
    correct_colors = guess.count do |color|
-       if code.include?(color)
-         code.slice!(code.index(color))
-       end
+       code.slice!(code.index(color)) if code.include?(color)
      end
   end
 

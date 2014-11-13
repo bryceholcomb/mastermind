@@ -25,8 +25,8 @@ class CLI
     when play?
       game = Game.new($stdin, $stdout)
       game.play
-    when instructions? then puts @printer.instructions
-    when finished? then puts @printer.exit_cli_message
+    when instructions?  then puts @printer.instructions
+    when finished?      then puts @printer.exit_cli_message
     else puts @printer.not_a_valid_command
     end
   end
